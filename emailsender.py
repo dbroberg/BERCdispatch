@@ -115,10 +115,6 @@ class EmailCompiler(object):
         #after html is created, send the draft email to my gmail account
         print '\nAttempting to send email.'
 
-        # me = "ddidjbroberg@gmail.com"
-        # you = "ddidjbroberg@gmail.com"
-        # you = "anna.brockway@berkeley.edu"
-
         msg = MIMEMultipart('alternative')
 
         todayobj = datetime.datetime.today()
@@ -130,7 +126,6 @@ class EmailCompiler(object):
         # Record the MIME types of both parts - text/plain and text/html.
         # part2 = MIMEText(self.html, 'plain')
         part2 = MIMEText(self.html, 'html')
-        # print part2
         msg.attach(part2)
 
         fp = open(self.attachment, 'rb')
@@ -146,7 +141,6 @@ class EmailCompiler(object):
         mail.ehlo()
         mail.starttls()
 
-        # mail.login('ddidjbroberg@gmail.com', 'Envelope66!')
         mail.login(me, pwd)
         mail.sendmail(me, you, msg.as_string())
         mail.quit()
