@@ -1,6 +1,6 @@
 # BERCdispatch
 A python code for sending the BERC weekly dispatch. Queries a google calendar and a google form.
-Before using, one must create a google API for their email account.
+If not doing this for BERC Dispatch purposes, then before using, one must create a google API for their email account.
 - for google calendar API use this link: https://developers.google.com/google-apps/calendar/quickstart/python
 - for google spreadsheets API use this link: https://developers.google.com/sheets/api/quickstart/python 
 
