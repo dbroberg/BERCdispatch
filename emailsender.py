@@ -81,7 +81,6 @@ class EmailCompiler(object):
         <span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">.</span><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><br class="m_-8449436374389848411gmail-kix-line-break"></span>"""
 
 
-
         self.html+="""<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"></span></p><hr><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">
         <br class="m_-8449436374389848411gmail-kix-line-break"></span>"""
 
@@ -150,6 +149,4 @@ class EmailCompiler(object):
 if __name__ == "__main__":
     s = EmailCompiler([["1) test1, Tuesday", "2) test2, Wednesday"],["I told you this was a test...</p> see...its a test...","yayayayya</br>buttsup"]],[["3) heyo for yayo"],["whatusp man"]])
     s.html_creator()
-    # with open('filetest.html','a') as f:
-    #     f.write(s.html)
     s.send_email()
