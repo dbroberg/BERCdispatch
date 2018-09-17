@@ -3,6 +3,9 @@ For google sheets and calendar APIs
 
 Note...I think if this code gets passed on then the next person will need to make sure they have
 Google Calendar and Sheets API's configured (google it online and you will see how to do it)
+
+Also note, following might be useful for packages:
+pip install --upgrade google-api-python-client
 """
 from __future__ import print_function
 import httplib2
@@ -78,7 +81,6 @@ class Sheets(object):
         exitloop = False
         while not exitloop:
             startrow+=1
-            # print(startrow)
             rangeName = rangeNamestart+str(startrow)
             result = service.spreadsheets().values().get(
                 spreadsheetId=spreadsheetId, range=rangeName).execute()
@@ -100,7 +102,6 @@ class Sheets(object):
                     dateval = row[2].split('/')
                     date=datetime.date(int(dateval[2]),int(dateval[0]),int(dateval[1]))
                     if date >= datetime.date.today():
-                        # print(row)
                         organized[date] = {}
                         datelist.append(date)
                         for head,val in zip(fields,row):
@@ -162,12 +163,6 @@ class Calendar(object):
         credentials = self.get_credentials()
         http = credentials.authorize(httplib2.Http())
         service = discovery.build('calendar', 'v3', http=http)
-
-        # berc = {'BERC Events':'h511emd2rcr3ucpi2krbuq29is@group.calendar.google.com',
-        #  'BERC Communities':'ara2504h9kcjvo6nf7cqpqike0@group.calendar.google.com'}
-
-        # nonberc = {'On-Campus Energy/Resource Events':'msnvpj6jbvo8ah2rpil5b414mo@group.calendar.google.com',
-        #  'Off-Campus Energy/Resources Events (BERC)':'v77id1bi2d39oo4pn51talaf3s@group.calendar.google.com'}
 
         keyset = [u'summary', u'location', u'start',  u'end', u'description']
         #these are other keys for events and may be helpful... = [u'kind', u'status', u'created', u'updated', u'creator',  u'organizer']

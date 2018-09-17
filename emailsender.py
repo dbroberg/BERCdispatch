@@ -40,67 +40,68 @@ class EmailCompiler(object):
         <html>
         <head></head>
         <body>
-            <center>
-            <p><span style="font-size:8px;font-family:arial;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><HR WIDTH="60%">
-            """+self.imagehtml+"""
-            <center><span style="font-size:32px;font-family:diplomata;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">DISPATCH</span></center><br>
-            <p><span style="font-size:8px;font-family:arial;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><HR WIDTH="60%">
-            </p>
-            <center><span style="font-size:14.6667px;font-family:cambria;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">Berkeley, California - """+str(today)+"""</span></center>
-            <p><span style="font-size:8px;font-family:arial;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><HR WIDTH="60%">
-            </center>
-            <p><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">Headlines:</span></p>
-            <ul style="margin-top:0pt;margin-bottom:0pt"><li dir="ltr" style="list-style-type:disc;font-size:17.3333px;font-family:cambria;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt"><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">Highlight 1</span></p></li>
-            <li dir="ltr" style="list-style-type:disc;font-size:17.3333px;font-family:cambria;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt"><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">Highlight 2</span></p></li>
-            <li dir="ltr" style="list-style-type:disc;font-size:17.3333px;font-family:cambria;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt"><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">Highlight 3</span></p></li></ul>
-            <p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt"><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"></span></p><hr>
-            <span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:italic;font-variant:normal;text-decoration:none;vertical-align:baseline">BERC Events</span>
-        """
+            <center>"""
 
         #do berc table of contents
         for tind,tocentry in enumerate(self.tocvalues_berc[0]):
             tocentry.replace('\n','<br />')
-            self.html+="""<p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt"><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:italic;font-variant:normal;text-decoration:none;vertical-align:baseline"><a href="#"""+str(tind+1)+"""" target="_self">"""+str(tocentry)+"""</a></span>"""
+            self.html+="""<p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt">"""\
+                """<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);"""\
+                """background-color:transparent;font-weight:400;"""\
+                """font-style:italic;font-variant:normal;text-decoration:none;vertical-align:baseline">"""\
+                """<a href="#"""+str(tind+1)+"""" target="_self">"""+str(tocentry)+"""</a></span>"""
 
         #next do non-berc table of contents
         if len(self.tocvalues_nonberc[0]):
-            self.html+="""</p><br><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:italic;font-variant:normal;text-decoration:none;vertical-align:baseline">Other Events and Opportunities</span>"""
+            self.html+="""</p><br><span style="font-size:17.3333px;font-family:cambria;"""\
+                """color:rgb(26,26,26);background-color:transparent;font-weight:400;"""\
+                """font-style:italic;font-variant:normal;text-decoration:none;"""\
+                """vertical-align:baseline">Other Events and Opportunities</span>"""
         for nonberctoc in self.tocvalues_nonberc[0]:
             tind+=1
-            self.html+="""<p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt"><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:italic;font-variant:normal;text-decoration:none;vertical-align:baseline"><a href="#"""+str(tind+1)+"""" target="_self">"""+str(nonberctoc)+"""</span>"""
-
-        #add the sublink to filling dispatch information
-        self.html+="""<p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt">
-        <span style="font-size:16px;font-family:cambria;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"></span>
-        </p><hr><p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt"><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">
-        Don't see an event that belongs in this newsletter? You can always</span><a href="https://docs.google.com/forms/d/e/1FAIpQLSdQcizmG5hOSzjzQHMhLppHnDgpGUHwbrxA4yID48jW_FMfPw/viewform" style="text-decoration:none" target="_blank">
-        <span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"> </span><span style="font-size:17.3333px;font-family:cambria;color:rgb(16,60,192);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;vertical-align:baseline">submit events via this form.</span></a>
-        </p><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">
-        Looking for a job? Check out</span><a href="http://berc.berkeley.edu/jobs/" style="text-decoration:none" target="_blank">
-        <span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"> </span><span style="font-size:17.3333px;font-family:cambria;color:rgb(16,60,192);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;vertical-align:baseline">BERC's Jobs board.</span></a>
-        <span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">.</span><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><br class="m_-8449436374389848411gmail-kix-line-break"></span>"""
+            self.html+="""<p dir="ltr" style="line-height:1.656;margin-top:0pt;margin-bottom:0pt">"""\
+                """<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);"""\
+                """background-color:transparent;font-weight:400;font-style:italic;font-variant:normal;"""\
+                """text-decoration:none;vertical-align:baseline">"""\
+                """<a href="#"""+str(tind+1)+"""" target="_self">"""+str(nonberctoc)+"""</span>"""
 
 
-        self.html+="""<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"></span></p><hr><span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">
-        <br class="m_-8449436374389848411gmail-kix-line-break"></span>"""
+        self.html+="""<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);"""\
+                """background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;"""\
+                """text-decoration:none;vertical-align:baseline"></span></p><hr><"""\
+                """span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);"""\
+                """background-color:transparent;font-weight:400;font-style:normal;"""\
+                """font-variant:normal;text-decoration:none;vertical-align:baseline">"""\
+                """<br class="m_-8449436374389848411gmail-kix-line-break"></span>"""
 
-        print '\ntacking onto email...'
+        print('\ntacking onto email...')
         tind = 0
         for toc, fullentry in zip(self.tocvalues_berc[0], self.tocvalues_berc[1]):
             tind+=1
-            print toc
-            self.html+="""<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><a name="""+str(tind)+"""></a>"""+str(toc)+"""</span>
-            <span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">
-            <br class="m_-8449436374389848411gmail-kix-line-break"></span><pre style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;
-            font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">"""+fullentry+"""</pre><hr>"""
+            print(toc)
+            self.html+="""<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);"""\
+                """background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;"""\
+                """text-decoration:none;vertical-align:baseline"><a name="""+str(tind)+"""></a>"""+str(toc)+"""</span>"""\
+                """<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);"""\
+                """background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;"""\
+                """text-decoration:none;vertical-align:baseline">"""\
+                """<br class="m_-8449436374389848411gmail-kix-line-break"></span>"""\
+                """<pre style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;"""\
+                """font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">"""\
+                +fullentry+"""</pre><hr>"""
 
         for toc, fullentry in zip(self.tocvalues_nonberc[0], self.tocvalues_nonberc[1]):
             tind +=1
-            print toc
-            self.html+="""<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline"><a name="""+str(tind)+"""></a>"""+str(toc)+"""</span>
-            <span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">
-            <br class="m_-8449436374389848411gmail-kix-line-break"></span><pre style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;
-            font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">"""+fullentry+"""</pre><hr>"""
+            print(toc)
+            self.html+="""<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);"""\
+                """background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;"""\
+                """text-decoration:none;vertical-align:baseline"><a name="""+str(tind)+"""></a>"""+str(toc)+"""</span>"""\
+                """<span style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;"""\
+                """font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">"""\
+                """<br class="m_-8449436374389848411gmail-kix-line-break"></span>"""\
+                """<pre style="font-size:17.3333px;font-family:cambria;color:rgb(26,26,26);background-color:transparent;"""\
+                """font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline">"""\
+                +fullentry+"""</pre><hr>"""
 
         #use this to end the html script...
         self.html += """
@@ -112,7 +113,7 @@ class EmailCompiler(object):
 
     def send_email(self):
         #after html is created, send the draft email to my gmail account
-        print '\nAttempting to send email.'
+        print('\nAttempting to send email.')
 
         msg = MIMEMultipart('alternative')
 
@@ -143,7 +144,7 @@ class EmailCompiler(object):
         mail.login(me, pwd)
         mail.sendmail(me, you, msg.as_string())
         mail.quit()
-        print 'Email sent!'
+        print('Email sent!')
         return
 
 if __name__ == "__main__":

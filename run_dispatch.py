@@ -38,7 +38,7 @@ Google APIs...
 import os
 import datetime
 
-from google import Sheets, Calendar
+from berc_google import Sheets, Calendar
 from emailsender import EmailCompiler
 
 dayset = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
@@ -68,12 +68,12 @@ class Dispatch(object):
         """
         bercset = []
         nonbercset = []
-        print 'Querying: BERC Newsletter Form (Responses)'
+        print('Querying: BERC Newsletter Form (Responses)')
         s=Sheets()
         datekeys, entries, nodates = s.main()
         if persnickity:
-            print '----------------\nHelp determine if these events are\n' \
-                  ' ("B") Berc events, ("N") Non-berc/Other Events and Opportunities, or ("R") Should be ignored.\n-----------'
+            print('----------------\nHelp determine if these events are\n' \
+                  ' ("B") Berc events, ("N") Non-berc/Other Events and Opportunities, or ("R") Should be ignored.\n-----------')
             for date in datekeys:
                 eventname = str(entries[date]['Name of event'])
                 location = str(entries[date]['Location of event'])
@@ -88,18 +88,19 @@ class Dispatch(object):
                     outval = ''
                 outval += entries[date]['Description of Event']+'\n'
                 outval += entries[date]['Link for information or RSVP']
-                print '\n-----------------\n',tocvalue,'\n',outval,'\n-----------------\nWhat does this qualify as? (B=BERC, N=Non-BERC, or R=Remove) '
+                print('\n-----------------\n',tocvalue,'\n',outval,'\n-----------------\n'
+                       'What does this qualify as? (B=BERC, N=Non-BERC, or R=Remove) ')
                 usr_decided = raw_input()
                 if usr_decided.upper()=='B':
-                    print '\nCool. Adding it to the list of BERC events.\n-------\n'
+                    print('\nCool. Adding it to the list of BERC events.\n-------\n')
                     bercset.append([date,tocvalue,outval])
                 elif usr_decided.upper()=='N':
-                    print '\nCool. Adding it to the list of non-BERC events.\n-------\n'
+                    print('\nCool. Adding it to the list of non-BERC events.\n-------\n')
                     nonbercset.append([date,tocvalue,outval])
                 elif usr_decided.upper()=='R':
-                    print '\nSkipping this event entry.'
+                    print('\nSkipping this event entry.')
                 else:
-                    print '\nError occured! Please try again and enter either B,N, or R\n'
+                    print('\nError occured! Please try again and enter either B,N, or R\n')
                     os.kill()
         else:
             for date in datekeys:
@@ -119,13 +120,13 @@ class Dispatch(object):
                 outval += entries[date]['Description of Event']+'\n'
                 outval += entries[date]['Link for information or RSVP']
                 if 'BERC' in tocvalue.upper():
-                    print '\nBERC EVENT ADDED-----------------\n',tocvalue,'\n',outval,'\n-----------------\n\n'
+                    print('\nBERC EVENT ADDED-----------------\n',tocvalue,'\n',outval,'\n-----------------\n\n')
                     bercset.append([date,tocvalue,outval])
                 else:
-                    print '\nNON BERC EVENT ADDED-----------------\n',tocvalue,'\n',outval,'\n-----------------\n\n'
+                    print('\nNON BERC EVENT ADDED-----------------\n',tocvalue,'\n',outval,'\n-----------------\n\n')
                     nonbercset.append([date,tocvalue,outval])
 
-        print 'Querying: Google Calendars'
+        print('Querying: Google Calendars')
         c = Calendar()
         tmpberc, tmpnonberc = c.main()
         for entry in tmpberc:
@@ -140,30 +141,31 @@ class Dispatch(object):
         while not satisfied:
             outputberc = [[],[]]
             outputnonberc = [[],[]]
-            print '\n\n-----------------------\nAt this point this is our list of events:\nBERC Events:\n'
+            print('\n\n-----------------------\nAt this point this is our list of events:\nBERC Events:\n')
             for ind, entry in enumerate(bercset):
-                print '(',ind+1,')',entry[1]
+                print('(',ind+1,')',entry[1])
                 outputberc[0].append('('+str(ind+1)+') '+str(entry[1]))
                 outputberc[1].append(unicode(entry[2]).encode('ascii', 'xmlcharrefreplace'))
 
             if not len(bercset): #this is so code doesn't break when no berc events exist...mainly for debugging
                 ind=-1
 
-            print '\nOther Events and Opportunities:'
+            print('\nOther Events and Opportunities:')
             for ind1, entry in enumerate(nonbercset):
-                print '(',(ind+1)+(ind1+1),')',entry[1]
+                print('(',(ind+1)+(ind1+1),')',entry[1])
                 outputnonberc[0].append('('+str(ind+1+(ind1+1))+') '+str(entry[1]))
                 outputnonberc[1].append(unicode(entry[2]).encode('ascii', 'xmlcharrefreplace'))
 
-            print '\n----\nDo you want to remove any of these? Press return to continue ' \
-                  'OR\n1) enter R+number to remove event\n2) enter S to enter showing mode\n3) enter M+number to move event to opposite section'
+            print('\n----\nDo you want to remove any of these? Press return to continue ' \
+                  'OR\n1) enter R+number to remove event\n2) enter S to enter showing mode\n'
+                  '3) enter M+number to move event to opposite section')
             answer = raw_input()
             if not answer:
                 satisfied = True
             elif 'R' in answer.upper():
                 answer = answer.upper().lstrip('R')
                 try:
-                    print '\nRemoving entry ',str(answer)
+                    print('\nRemoving entry ',str(answer))
                     if int(answer) <= len(bercset):
                         delval = int(answer)-1
                         del bercset[delval]
@@ -171,11 +173,11 @@ class Dispatch(object):
                         delval = int(answer)-1-len(bercset)
                         del nonbercset[delval]
                 except:
-                    print 'Problem with your input. Try again, please.'
+                    print('Problem with your input. Try again, please.')
             elif 'M' in answer.upper():
                 answer = answer.upper().lstrip('M')
                 try:
-                    print '\nMoving entry ',str(answer)
+                    print('\nMoving entry ',str(answer))
                     if int(answer) <= len(bercset):
                         moveval = int(answer)-1
                         nonbercset.append(bercset[moveval])
@@ -187,27 +189,27 @@ class Dispatch(object):
                         del nonbercset[moveval]
                         bercset.sort()
                 except:
-                    print 'Problem with your input. Try again, please.'
+                    print('Problem with your input. Try again, please.')
             elif 'S' in answer.upper():
-                print '\nShow and tell mode started. What entry would you like to show? (Press enter to continue)'
+                print('\nShow and tell mode started. What entry would you like to show? (Press enter to continue)')
                 showval = raw_input()
                 while showval:
                     try:
-                        print '-----\nReview entry ',str(showval),'\n-----\n'
+                        print('-----\nReview entry ',str(showval),'\n-----\n')
                         if int(showval) <= len(bercset):
                             showint = int(showval)-1
-                            print bercset[showint][1]
-                            print bercset[showint][2],'\n-----------\n'
+                            print(bercset[showint][1])
+                            print(bercset[showint][2],'\n-----------\n')
                         else:
                             showint = int(showval)-1-len(bercset)
-                            print nonbercset[showint][1]
-                            print nonbercset[showint][2],'\n-----------\n'
+                            print(nonbercset[showint][1])
+                            print(nonbercset[showint][2],'\n-----------\n')
                     except:
-                        print 'ERROR occured! Please enter a number in range 1-'+str(len(nonbercset)+len(bercset))+'\n'
-                    print 'Show another one? (press enter to exit show mode)'
+                        print('ERROR occured! Please enter a number in range 1-'+str(len(nonbercset)+len(bercset))+'\n')
+                    print('Show another one? (press enter to exit show mode)')
                     showval = raw_input()
             else:
-                print '\n------\nInvalid Option! Either do remove mode or show mode!\n----\n'
+                print('\n------\nInvalid Option! Either do remove mode or show mode!\n----\n')
 
 
         #note these need to be [toc, details] with toc list (with numbers already assigned) and details in same order as the toc...
